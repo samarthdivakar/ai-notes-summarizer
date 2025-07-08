@@ -14,7 +14,7 @@ export default function Home() {
     setError("");
     setSummary("");
     try {
-      const response = await fetch("http://localhost:3001/summarize", {
+      const response = await fetch("https://ai-notes-summarizer-backend-l395.onrender.com/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: notes }),
