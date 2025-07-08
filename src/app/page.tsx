@@ -6,16 +6,29 @@ export default function Home() {
   const [notes, setNotes] = useState("");
   const [summary, setSummary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSummarize = async () => {
     if (!notes.trim()) return;
-    
     setIsLoading(true);
-    // TODO: Add AI integration here
-    setTimeout(() => {
-      setSummary("This is a placeholder summary. AI integration will be added next!");
+    setError("");
+    setSummary("");
+    try {
+      const response = await fetch("http://localhost:3001/summarize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: notes }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to summarize. Please try again.");
+      }
+      const data = await response.json();
+      setSummary(data.summary || "No summary returned.");
+    } catch (err) {
+      setError((err as Error).message || "An error occurred.");
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -45,7 +58,6 @@ export default function Home() {
               placeholder="Enter your notes, lecture content, or any text you'd like to summarize..."
               className="w-full h-64 md:h-80 p-4 border border-gray-200 dark:border-gray-600 rounded-xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
             />
-            
             <div className="mt-6 flex justify-center">
               <button
                 onClick={handleSummarize}
@@ -62,6 +74,11 @@ export default function Home() {
                 )}
               </button>
             </div>
+            {error && (
+              <div className="mt-4 text-center text-red-600 dark:text-red-400 font-semibold">
+                {error}
+              </div>
+            )}
           </div>
 
           {/* Result Section */}
