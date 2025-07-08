@@ -33,10 +33,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Deployment warning banner */}
-      <div className="w-full bg-yellow-200 text-yellow-900 text-center py-2 font-semibold shadow-md">
-        Note: Backend is not deployed yet. Summarization works only locally.
-      </div>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <header className="text-center mb-12">
