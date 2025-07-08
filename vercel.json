@@ -2,7 +2,5 @@
   "builds": [
     { "src": "next.config.ts", "use": "@vercel/next" }
   ],
-  "ignore": [
-    "backend/**"
-  ]
+  "ignoreBuildStep": "echo 'Skipping backend build'"
 } 
